@@ -8,7 +8,7 @@ Repositorio oficial del curso de **i-Quattro** enfocado en el uso profesional de
 
 ## Información General
 
-**Duración:** 20 horas
+**Duración:** 21 horas (7 sesiones de 3 horas)
 **Modalidad:** 100% práctico con laboratorios en cada sesión
 
 ### Objetivos
@@ -49,7 +49,7 @@ Formar a los participantes en el uso de containers (contenedores) con Docker y s
 
 ---
 
-## Clases (8 sesiones de 2.5 horas)
+## Clases (7 sesiones de 3 horas)
 
 ### Bloque 1: Docker (Clases 1-5)
 
@@ -58,45 +58,37 @@ Formar a los participantes en el uso de containers (contenedores) con Docker y s
   - Primeros containers: hello-world, nginx, ubuntu
   - Docker Hub y exploración de images oficiales
 
-- **[Clase 2: Dockerfiles y Construcción de Imágenes](bloque-docker/clase2-dockerfiles/)**
-  - Anatomía de un Dockerfile
-  - Multi-stage builds para optimización
-  - Publicar imágenes en Docker Hub
+- **[Clase 2: Dockerfiles y Fundamentos de Compose](bloque-docker/clase2-dockerfiles/)**
+  - Anatomía de un Dockerfile y multi-stage builds
+  - Buenas prácticas de seguridad (non-root users)
+  - Fundamentos previos a Compose (volúmenes, redes y anatomía del yaml)
 
 - **[Clase 3: Docker Compose - Redes y Volúmenes](bloque-docker/clase3-compose/)**
   - Orquestación multi-contenedor con Docker Compose
   - Redes personalizadas y segmentación de servicios
   - Volúmenes para persistencia de datos
 
-- **[Clase 4: Microservicios, Cache y Gateway](bloque-docker/clase4-microservicios/)**
-  - Aplicación multi-contenedor con cache (Redis)
-  - API Gateway con Kong
+- **[Clase 4: Microservicios y Seguridad Básica](bloque-docker/clase4-microservicios/)**
+  - Aplicación multi-contenedor con cache (Redis) y API Gateway
   - Comunicación entre servicios y frontend
+  - Introducción a scans con Trivy y hardening inicial
 
-- **[Clase 5: Seguridad y Optimización](bloque-docker/clase5-seguridad/)**
-  - Escaneo de vulnerabilidades con Trivy
-  - Técnicas de optimización de imágenes
-  - Multi-stage builds avanzados y Alpine
+- **[Clase 5: Seguridad Avanzada y Puente a Kubernetes](bloque-docker/clase5-seguridad/)**
+  - Escaneo de vulnerabilidades con Trivy y optimización de imágenes
+  - Técnicas avanzadas (multi-stage builds, Alpine, non-root)
+  - Preview de Kubernetes: componentes y flujo declarativo
 
-### Bloque 2: Kubernetes (Clases 6-8)
+### Bloque 2: Kubernetes (Clases 6-7)
 
-- **[Clase 6: Introducción a Kubernetes](bloque-kubernetes/clase6-introduccion/)**
+- **[Clase 6: Fundamentos de Kubernetes](bloque-kubernetes/clase6-introduccion/)**
   - Arquitectura de Kubernetes (Control Plane y Worker Nodes)
-  - Pods: Unidad mínima de despliegue
-  - Deployments: Gestión declarativa de aplicaciones
-  - Services: Exposición de aplicaciones (ClusterIP, NodePort, LoadBalancer)
+  - Pods, Deployments y Services (ClusterIP, NodePort, LoadBalancer con MetalLB)
+  - Herramientas clave: labels, selectors y namespaces
 
-- **[Clase 7: Namespaces, Configuración y Persistencia](bloque-kubernetes/clase7-configuracion-persistencia/)**
-  - Namespaces para organización de recursos
-  - ConfigMaps y Secrets para externalización de configuración
-  - StatefulSets para aplicaciones con estado
-  - PersistentVolumeClaims para persistencia de datos
-
-- **[Clase 8: Ingress, Health Probes y Escalado Automático](bloque-kubernetes/clase8-ingress-escalado/)**
-  - Ingress para routing HTTP avanzado
-  - Health Probes (Liveness, Readiness)
-  - HPA (Horizontal Pod Autoscaler)
-  - Observabilidad con Prometheus + Grafana + Loki (demo)
+- **[Clase 7: Kubernetes Avanzado](bloque-kubernetes/clase7-configuracion-persistencia/)**
+  - Namespaces, ConfigMaps, Secrets, StatefulSets y PVC
+  - Ingress, health probes (liveness/readiness/startup) y HPA
+  - Observabilidad como bonus: guía Prometheus + Grafana
 
 **[Ver bloques completos →](bloque-docker/)**
 
@@ -150,7 +142,7 @@ El curso incluye un **proyecto integrador full-stack** que evoluciona progresiva
 
 **Repositorio:** [proyecto-integrador-docker-k8s](https://github.com/alefiengo/proyecto-integrador-docker-k8s)
 
-### Stack Completo (Clase 8)
+### Stack Completo (Clase 7)
 - Spring Boot + Angular
 - PostgreSQL + Redis
 - Kong (Docker) / NGINX Ingress (Kubernetes)

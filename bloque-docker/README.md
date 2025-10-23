@@ -29,47 +29,38 @@ Al finalizar este bloque, serás capaz de:
 
 **[Cheat Sheet - Clase 1](clase1-introduccion/cheatsheet.md)**
 
-### [Clase 2: Dockerfiles y Construcción de Imágenes](clase2-dockerfiles/)
+### [Clase 2: Dockerfiles y Fundamentos de Compose](clase2-dockerfiles/)
 
-- Anatomía de un Dockerfile
-- Construir imágenes personalizadas
-- Multi-stage builds para optimización
-- Buenas prácticas de seguridad (non-root users)
-- Publicar imágenes en Docker Hub
-- Concepto de capas y cache
+- Anatomía de un Dockerfile, multi-stage builds y seguridad básica
+- Fundamentos en runtime: volúmenes, redes y qué va (o no) en la imagen
+- Anatomía de `docker-compose.yml` como antesala de la Clase 3
 
 **[Cheat Sheet - Clase 2](clase2-dockerfiles/cheatsheet.md)**
 
 ### [Clase 3: Docker Compose, Redes y Volúmenes](clase3-compose/)
 
 - Orquestación multi-contenedor con Docker Compose
-- Redes personalizadas y segmentación de servicios
-- Volúmenes para persistencia de datos
-- Comunicación entre servicios con DNS interno
-- Aplicación full-stack: Node.js + MongoDB
+- Redes personalizadas, segmentación de servicios y DNS interno
+- Volúmenes para persistencia de datos y patrones de datos compartidos
 
 **[Cheat Sheet - Clase 3](clase3-compose/cheatsheet.md)**
 
-### [Clase 4: Microservicios, Cache y Gateway](clase4-microservicios/)
+### [Clase 4: Microservicios y Seguridad Básica](clase4-microservicios/)
 
-- Aplicaciones multi-contenedor con cache (Redis)
-- API Gateway con Kong
-- Frontend con Angular y nginx
-- Comunicación entre servicios
-- Patrones de microservicios
+- Aplicaciones multi-contenedor con cache (Redis) y API Gateway
+- Integración frontend/backend y comunicación entre servicios
+- Introducción a Trivy y prácticas de hardening inicial
 
 **[Cheat Sheet - Clase 4](clase4-microservicios/cheatsheet.md)**
 
-### [Clase 5: Seguridad y Optimización](clase5-seguridad/)
+### [Clase 5: Seguridad Avanzada y Puente a Kubernetes](clase5-seguridad/)
 
-- Escaneo de vulnerabilidades con Trivy
-- Técnicas de optimización de imágenes
-- Multi-stage builds avanzados
-- Imagen base Alpine
-- Buenas prácticas de seguridad
-- Health checks y labels de metadata
+- Escaneo continuo con Trivy y optimización avanzada de imágenes
+- Multi-stage builds, Alpine y usuarios non-root en profundidad
+- Preview de Kubernetes: conceptos base y transición al siguiente bloque
 
 **[Cheat Sheet - Clase 5](clase5-seguridad/cheatsheet.md)**
+
 
 ---
 
