@@ -1,0 +1,123 @@
+# Archivo de ejemplo completamente comentado
+# Este archivo muestra TODOS los campos comunes en Docker Compose
+
+services:
+  # ============================================
+  # Servicio 1: Aplicación Web
+  # ============================================
+  web:
+    # Construir desde Dockerfile local
+    build:
+      context: .                  # Directorio donde está el Dockerfile
+      dockerfile: Dockerfile      # Nombre del Dockerfile (opcional)
+      args:                       # Argumentos de build
+        - NODE_ENV=production
+
+    # Nombre específico del contenedor
+    container_name: mi-web-app
+
+    # Mapeo de puertos (host:contenedor)
+    ports:
+      - "3000:3000"
+
+    # Variables de entorno
+    environment:
+      - NODE_ENV=production
+      - API_URL=http://api:5000
+      - DATABASE_URL=postgresql://db:5432/mydb
+
+    # Volúmenes
+    volumes:
+      - ./src:/app              # Bind mount para desarrollo
+      - web-logs:/var/log       # Named volume para logs
+
+    # Redes
+    networks:
+      - frontend
+      - backend
+
+    # Dependencias (orden de inicio)
+    depends_on:
+      - db
+      - cache
+
+    # Política de reinicio
+    restart: unless-stopped
+
+    # Healthcheck
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # ============================================
+  # Servicio 2: Base de Datos
+  # ============================================
+  db:
+    # Usar imagen oficial
+    image: postgres:15-alpine
+
+    container_name: postgres-db
+
+    environment:
+      - POSTGRES_USER=curso
+      - POSTGRES_PASSWORD=docker123
+      - POSTGRES_DB=coursedb
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      # Volumen para datos persistentes
+      - postgres-data:/var/lib/postgresql/data
+      # Script de inicialización
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+    networks:
+      - backend
+
+    restart: always
+
+  # ============================================
+  # Servicio 3: Cache (Redis)
+  # ============================================
+  cache:
+    image: redis:7-alpine
+
+    container_name: redis-cache
+
+    ports:
+      - "6379:6379"
+
+    networks:
+      - backend
+
+    restart: always
+
+# ============================================
+# REDES
+# ============================================
+networks:
+  # Red para frontend
+  frontend:
+    driver: bridge
+
+  # Red para backend (con configuración personalizada)
+  backend:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.28.0.0/16
+
+# ============================================
+# VOLÚMENES
+# ============================================
+volumes:
+  # Volumen para logs de la app
+  web-logs:
+    driver: local
+
+  # Volumen para datos de PostgreSQL
+  postgres-data:
+    driver: local

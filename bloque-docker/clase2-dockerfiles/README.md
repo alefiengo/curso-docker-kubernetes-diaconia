@@ -58,6 +58,8 @@ Archivo de texto con instrucciones para construir una imagen Docker de forma aut
 
 ## Laboratorios de la clase
 
+- [Fundamentos previos](demos/README.md)
+
 - [Lab 1: Nginx con Contenido Estatico](labs/01-nginx-static/)
 - [Lab 2: Node.js + Express con Multi-Stage Build](labs/02-nodejs-express-multistage/)
 
