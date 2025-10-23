@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acerca de - Sitio Estático Docker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Acerca de este Lab</h1>
+            <p class="subtitle">Ejemplo de sitio estático con Nginx</p>
+        </header>
+
+        <main>
+            <section class="card">
+                <h2>Propósito del Laboratorio</h2>
+                <p>Este laboratorio demuestra cómo crear una imagen Docker personalizada para servir contenido estático HTML utilizando Nginx.</p>
+
+                <h3>Conceptos prácticos:</h3>
+                <ul>
+                    <li>Uso de la instrucción <code>FROM</code> con imágenes Alpine</li>
+                    <li>Copia de directorios completos con <code>COPY</code></li>
+                    <li>Configuración personalizada de Nginx</li>
+                    <li>Exposición de puertos no estándar</li>
+                    <li>Construcción y ejecución de imágenes personalizadas</li>
+                </ul>
+            </section>
+
+            <section class="card">
+                <h2>Ventajas de Alpine</h2>
+                <p>La imagen base <strong>nginx:alpine</strong> ofrece:</p>
+                <ul>
+                    <li>Tamaño mínimo: aproximadamente 24 MB vs 142 MB de nginx:latest</li>
+                    <li>Mayor seguridad: menor superficie de ataque</li>
+                    <li>Inicio rápido de contenedores</li>
+                    <li>Menor uso de ancho de banda</li>
+                </ul>
+            </section>
+
+            <section class="card">
+                <h2>Estructura de Archivos</h2>
+                <pre>
+01-nginx-static/
+├── Dockerfile
+├── nginx.conf
+├── static-html-directory/
+│   ├── index.html
+│   ├── about.html
+│   └── styles.css
+└── README.md
+                </pre>
+            </section>
+        </main>
+
+        <footer>
+            <p><a href="index.html">Volver al inicio</a></p>
+        </footer>
+    </div>
+</body>
+</html>

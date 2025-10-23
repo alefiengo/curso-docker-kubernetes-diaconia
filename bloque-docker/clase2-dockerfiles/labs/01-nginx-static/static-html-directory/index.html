@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sitio Estático con Docker y Nginx</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Sitio Web Estático Dockerizado</h1>
+            <p class="subtitle">Clase 2: Dockerfiles - Nginx + HTML</p>
+        </header>
+
+        <main>
+            <section class="card">
+                <h2>Bienvenido</h2>
+                <p>Este es un sitio web estático servido por <strong>Nginx</strong> dentro de un contenedor Docker.</p>
+                <p>Este ejemplo demuestra cómo:</p>
+                <ul>
+                    <li>Copiar archivos estáticos a una imagen Docker</li>
+                    <li>Configurar Nginx con un archivo personalizado</li>
+                    <li>Exponer puertos personalizados</li>
+                    <li>Construir imágenes ligeras con Alpine Linux</li>
+                </ul>
+            </section>
+
+            <section class="card">
+                <h2>Tecnologías Utilizadas</h2>
+                <div class="tech-list">
+                    <div class="tech-item">
+                        <h3>Docker</h3>
+                        <p>Contenedorización de la aplicación</p>
+                    </div>
+                    <div class="tech-item">
+                        <h3>Nginx</h3>
+                        <p>Servidor web de alto rendimiento</p>
+                    </div>
+                    <div class="tech-item">
+                        <h3>Alpine Linux</h3>
+                        <p>Imagen base minimalista (5 MB)</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="card">
+                <h2>Información del Curso</h2>
+                <p><strong>Curso:</strong> Docker & Kubernetes: Contenedores y Orquestación en la Práctica</p>
+                <p><strong>Instituto:</strong> i-Quattro</p>
+                <p><strong>Instructor:</strong> Alejandro Fiengo</p>
+            </section>
+        </main>
+
+        <footer>
+            <p>Curso Docker & Kubernetes - i-Quattro</p>
+            <p><a href="about.html">Acerca de</a></p>
+        </footer>
+    </div>
+</body>
+</html>
