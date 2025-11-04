@@ -253,7 +253,7 @@ services:
 
 ## Siguiente
 
-[04: Anatomía docker-compose.yml →](../04-anatomia-compose/)
+[02: Anatomía docker-compose.yml →](../02-anatomia-compose/)
 
 ---
 

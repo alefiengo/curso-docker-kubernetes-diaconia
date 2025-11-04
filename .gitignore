@@ -64,6 +64,7 @@ go.work
 
 # Personal and Private
 AGENT.md
+CLAUDE.md
 .cursor/
 .cursorrules
 TODO.md

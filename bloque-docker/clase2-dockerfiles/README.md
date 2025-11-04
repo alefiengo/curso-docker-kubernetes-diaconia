@@ -56,9 +56,18 @@ Archivo de texto con instrucciones para construir una imagen Docker de forma aut
 
 ---
 
-## Laboratorios de la clase
+## Fundamentos
 
-- [Fundamentos previos](demos/README.md)
+Conceptos previos a Docker Compose que preparan para la Clase 3:
+
+- [01: Volúmenes y Redes - Conceptual](demos/01-volumenes-redes-conceptual/)
+- [02: Anatomía de docker-compose.yml](demos/02-anatomia-compose/)
+
+**[Ver todos los fundamentos](demos/)**
+
+---
+
+## Laboratorios
 
 - [Lab 1: Nginx con Contenido Estatico](labs/01-nginx-static/)
 - [Lab 2: Node.js + Express con Multi-Stage Build](labs/02-nodejs-express-multistage/)
