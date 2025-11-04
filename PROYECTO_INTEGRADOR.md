@@ -173,7 +173,7 @@ Los estudiantes pueden:
 ## Recursos
 
 - **Repositorio del Proyecto:** [github.com/alefiengo/proyecto-integrador-docker-k8s](https://github.com/alefiengo/proyecto-integrador-docker-k8s)
-- **Repositorio del Curso:** [github.com/alefiengo/curso-docker-kubernetes](https://github.com/alefiengo/curso-docker-kubernetes)
+- **Repositorio del Curso:** [github.com/alefiengo/curso-docker-kubernetes-diaconia](https://github.com/alefiengo/curso-docker-kubernetes-diaconia)
 - **Autor:** [alefiengo.dev](https://alefiengo.dev)
 
 ---

@@ -130,7 +130,7 @@ Cada clase contiene:
 Recomendamos clonar el repositorio y seguir las clases en orden:
 
 ```bash
-git clone https://github.com/alefiengo/curso-docker-kubernetes.git
+git clone https://github.com/alefiengo/curso-docker-kubernetes-diaconia.git
 cd curso-docker-kubernetes/bloque-docker/clase1-introduccion
 ```
 

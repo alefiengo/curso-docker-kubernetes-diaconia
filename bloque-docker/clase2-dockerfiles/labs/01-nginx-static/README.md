@@ -106,7 +106,7 @@ nginx-static    1.0       abc123def456   10 seconds ago   24.5MB
 ## Paso 4: Ejecutar el Container (Contenedor)
 
 ```bash
-docker run -d -p 8089:8089 --name web-estático nginx-static:1.0
+docker run -d -p 8089:8089 --name web-estatico nginx-static:1.0
 ```
 
 ### Desglose del comando
@@ -116,7 +116,7 @@ docker run -d -p 8089:8089 --name web-estático nginx-static:1.0
 | `docker run` | Crear y ejecutar un container |
 | `-d` | **Detached mode** - Ejecutar en segundo plano |
 | `-p 8089:8089` | **Port mapping** - Mapear puerto 8089 del host al puerto 8089 del container |
-| `--name web-estático` | Asignar nombre al container |
+| `--name web-estatico` | Asignar nombre al container |
 | `nginx-static:1.0` | Imagen a utilizar |
 
 ### Verificar que el container este corriendo:
@@ -129,7 +129,7 @@ docker ps
 
 ```
 CONTAINER ID   IMAGE              COMMAND                  CREATED         STATUS         PORTS                    NAMES
-abc123def456   nginx-static:1.0   "/docker-entrypoint.…"   5 seconds ago   Up 4 seconds   0.0.0.0:8089->8089/tcp   web-estático
+abc123def456   nginx-static:1.0   "/docker-entrypoint.…"   5 seconds ago   Up 4 seconds   0.0.0.0:8089->8089/tcp   web-estatico
 ```
 
 ---
@@ -170,7 +170,7 @@ http://localhost:8089/about.html
 ### Ver logs del servidor Nginx:
 
 ```bash
-docker logs web-estático
+docker logs web-estatico
 ```
 
 **Salida esperada:**
@@ -182,7 +182,7 @@ docker logs web-estático
 ### Ver logs en tiempo real:
 
 ```bash
-docker logs -f web-estático
+docker logs -f web-estatico
 ```
 
 Cada vez que accedas al sitio en el navegador, verás los logs de acceso.
@@ -190,7 +190,7 @@ Cada vez que accedas al sitio en el navegador, verás los logs de acceso.
 ### Acceder al shell del container:
 
 ```bash
-docker exec -it web-estático sh
+docker exec -it web-estatico sh
 ```
 
 Dentro del container, puedes explorar:
@@ -225,14 +225,14 @@ docker build -t nginx-static:1.1 .
 3. Detiene el container anterior:
 
 ```bash
-docker stop web-estático
-docker rm web-estático
+docker stop web-estatico
+docker rm web-estatico
 ```
 
 4. Ejecuta la nueva versión:
 
 ```bash
-docker run -d -p 8089:8089 --name web-estático nginx-static:1.1
+docker run -d -p 8089:8089 --name web-estatico nginx-static:1.1
 ```
 
 5. Refresca el navegador para ver los cambios
@@ -244,8 +244,8 @@ docker run -d -p 8089:8089 --name web-estático nginx-static:1.1
 ### Detener y eliminar el container:
 
 ```bash
-docker stop web-estático
-docker rm web-estático
+docker stop web-estatico
+docker rm web-estatico
 ```
 
 ### Eliminar la imagen:
@@ -283,7 +283,7 @@ docker rmi $(docker images nginx-static -q)
 
 ```bash
 # Opción 1: Usar otro puerto
-docker run -d -p 9090:8089 --name web-estático nginx-static:1.0
+docker run -d -p 9090:8089 --name web-estatico nginx-static:1.0
 
 # Opción 2: Detener el container que esta usando el puerto
 docker ps
@@ -292,16 +292,16 @@ docker stop <container-id>
 
 ### Error: "container name already in use"
 
-**Problema:** Ya existe un container con el nombre `web-estático`.
+**Problema:** Ya existe un container con el nombre `web-estatico`.
 
 **Solución:**
 
 ```bash
 # Eliminar el container existente
-docker rm -f web-estático
+docker rm -f web-estatico
 
 # O usar otro nombre
-docker run -d -p 8089:8089 --name web-estático-v2 nginx-static:1.0
+docker run -d -p 8089:8089 --name web-estatico-v2 nginx-static:1.0
 ```
 
 ### El sitio no se ve con estilos
@@ -314,13 +314,13 @@ docker run -d -p 8089:8089 --name web-estático-v2 nginx-static:1.0
 2. Inspecciona el container:
 
 ```bash
-docker exec -it web-estático ls -la /usr/share/nginx/html
+docker exec -it web-estatico ls -la /usr/share/nginx/html
 ```
 
 3. Revisa que nginx.conf incluya MIME types:
 
 ```bash
-docker exec -it web-estático cat /etc/nginx/nginx.conf | grep mime.types
+docker exec -it web-estatico cat /etc/nginx/nginx.conf | grep mime.types
 ```
 
 **Solución:** Reconstruye la imagen asegurándote de que todos los archivos esten presentes.
