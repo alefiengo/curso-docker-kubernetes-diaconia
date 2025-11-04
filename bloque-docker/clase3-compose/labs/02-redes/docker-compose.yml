@@ -1,0 +1,35 @@
+services:
+  frontend:
+    image: nginx:alpine
+    container_name: frontend
+    ports:
+      - "8080:80"
+    networks:
+      - frontend-net
+      - backend-net
+    depends_on:
+      - backend
+
+  backend:
+    image: nginx:alpine
+    container_name: backend
+    networks:
+      - backend-net
+      - database-net
+
+  database:
+    image: postgres:15-alpine
+    container_name: database
+    environment:
+      - POSTGRES_PASSWORD=secret123
+      - POSTGRES_DB=testdb
+    networks:
+      - database-net
+
+networks:
+  frontend-net:
+    driver: bridge
+  backend-net:
+    driver: bridge
+  database-net:
+    driver: bridge
