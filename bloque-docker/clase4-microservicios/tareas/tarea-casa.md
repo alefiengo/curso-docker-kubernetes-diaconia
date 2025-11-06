@@ -219,7 +219,71 @@ curl http://localhost:8080/api/health
 curl http://localhost:8080/  # Debe mostrar frontend
 ```
 
-## Parte 6: Criterios de Evaluación
+## Parte 6: Bonus Opcional - Seguridad (+20%)
+
+**Si quieres destacar, agrega estas prácticas de seguridad:**
+
+### 1. Escaneo con Trivy (+10%)
+
+```bash
+# Escanear todas tus imágenes
+trivy image --severity CRITICAL,HIGH tu-backend:latest
+trivy image --severity CRITICAL,HIGH tu-frontend:latest
+
+# Generar reporte
+trivy image -f json -o trivy-report.json tu-backend:latest
+```
+
+**Documenta en README:**
+- Tabla con resumen de vulnerabilidades encontradas
+- Screenshot del escaneo
+- Acciones tomadas para remediar (si aplica)
+
+**Ejemplo de tabla:**
+
+| Imagen | CRITICAL | HIGH | MEDIUM | Acciones |
+|--------|----------|------|---------|----------|
+| backend:latest | 2 | 5 | 12 | Actualicé imagen base a node:18-alpine |
+| frontend:latest | 0 | 1 | 8 | Sin vulnerabilidades críticas |
+
+### 2. Optimización de Imágenes (+10%)
+
+**Antes y después:**
+
+```bash
+# Ver tamaños originales
+docker images | grep tu-app
+
+# Aplicar optimizaciones:
+# - Usar Alpine como base
+# - Multi-stage builds
+# - npm ci --only=production
+# - Limpiar cache
+
+# Ver tamaños optimizados
+docker images | grep tu-app
+```
+
+**Documenta en README:**
+- Tabla comparativa de tamaños antes/después
+- Porcentaje de reducción logrado
+- Técnicas aplicadas
+
+**Ejemplo de tabla:**
+
+| Imagen | Antes | Después | Reducción |
+|--------|-------|---------|-----------|
+| backend | 980 MB | 145 MB | 85% |
+| frontend | 450 MB | 25 MB | 94% |
+
+**Técnicas aplicadas:**
+- ✅ Alpine Linux como base
+- ✅ Multi-stage builds
+- ✅ Usuario non-root
+- ✅ Limpieza de cache npm/apt
+- ✅ HEALTHCHECK implementado
+
+## Parte 7: Criterios de Evaluación
 
 **Docker Compose (25%)**
 - Configuración correcta de servicios
@@ -249,7 +313,11 @@ curl http://localhost:8080/  # Debe mostrar frontend
 - Cache mejora rendimiento
 - Datos persisten
 
-## Parte 7: Entrega
+**Bonus Seguridad (hasta +20% extra)**
+- Escaneo con Trivy (+10%)
+- Optimización de imágenes (+10%)
+
+## Parte 8: Entrega
 
 ### Formato de Entrega
 

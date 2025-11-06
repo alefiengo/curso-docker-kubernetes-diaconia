@@ -1,4 +1,4 @@
-# Cheatsheet - Clase 4: Microservicios, Cache y API Gateway
+# Cheatsheet - Clase 4: Microservicios y Seguridad
 
 ## Comandos Docker Compose
 
@@ -644,6 +644,173 @@ America/Santiago      # Chile (UTC-3/UTC-4 con DST)
 America/Buenos_Aires  # Argentina (UTC-3)
 America/Sao_Paulo     # Brasil (UTC-3)
 America/Mexico_City   # México (UTC-6/UTC-5 con DST)
+```
+
+## Trivy - Escaneo de Vulnerabilidades
+
+### Instalación
+
+```bash
+# Opción 1: Instalar localmente (Ubuntu/Debian)
+sudo apt-get install wget apt-transport-https gnupg lsb-release
+wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
+echo "deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main" | sudo tee -a /etc/apt/sources.list.d/trivy.list
+sudo apt-get update
+sudo apt-get install trivy
+
+# Opción 2: Usar como container (recomendado)
+alias trivy="docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy:latest"
+```
+
+### Comandos Básicos
+
+```bash
+# Escanear imagen
+trivy image nginx:alpine
+
+# Filtrar por severidad
+trivy image --severity CRITICAL,HIGH nginx:alpine
+
+# Ignorar vulnerabilidades sin fix
+trivy image --ignore-unfixed nginx:alpine
+
+# Generar reporte JSON
+trivy image -f json -o report.json mi-app:latest
+
+# Escanear Dockerfile
+trivy config Dockerfile
+
+# Actualizar base de datos
+trivy image --download-db-only
+
+# Limpiar cache
+trivy image --clear-cache
+```
+
+### Workflow de Remediación
+
+```bash
+# 1. Escanear versión actual
+trivy image --severity CRITICAL,HIGH mi-app:v1.0
+
+# 2. Identificar imagen base en Dockerfile
+grep "^FROM" Dockerfile
+
+# 3. Actualizar a versión más reciente
+# Dockerfile: FROM nginx:1.24-alpine → FROM nginx:1.25-alpine
+
+# 4. Rebuild y re-escanear
+docker build -t mi-app:v1.1 .
+trivy image --severity CRITICAL,HIGH mi-app:v1.1
+
+# 5. Comparar resultados
+trivy image --severity CRITICAL,HIGH mi-app:v1.0 | grep "Total:"
+trivy image --severity CRITICAL,HIGH mi-app:v1.1 | grep "Total:"
+```
+
+### Archivo .trivyignore
+
+```bash
+# Crear .trivyignore para ignorar CVEs específicos
+cat > .trivyignore << EOF
+# Ignorar temporalmente hasta que haya fix
+CVE-2024-XXXXX
+CVE-2024-YYYYY
+EOF
+
+# Trivy respetará este archivo automáticamente
+trivy image mi-app:latest
+```
+
+## Optimización de Imágenes
+
+### Técnicas de Optimización
+
+| Técnica | Beneficio | Reducción Estimada |
+|---------|-----------|-------------------|
+| Usar Alpine en lugar de imagen completa | Base mínima | ~900MB → ~150MB |
+| Multi-stage builds | Solo archivos necesarios | ~40-60% |
+| npm ci --only=production | Sin devDependencies | ~30-50MB |
+| Limpiar cache (npm, apt) | Sin archivos temporales | ~20-40MB |
+| Non-root user | Seguridad (sin reducción tamaño) | - |
+
+### Comparar Tamaños
+
+```bash
+# Ver tamaño de imagen
+docker images mi-app
+
+# Ver tamaño de cada capa
+docker history mi-app:latest
+
+# Comparar múltiples versiones
+docker images | grep mi-app
+```
+
+### Dockerfile - Imagen Sin Optimizar
+
+```dockerfile
+FROM node:18
+WORKDIR /app
+COPY . .
+RUN npm install
+EXPOSE 3000
+CMD ["node", "app.js"]
+```
+
+**Resultado:** ~1GB
+
+### Dockerfile - Imagen Optimizada
+
+```dockerfile
+# Stage 1: Build
+FROM node:18-alpine AS build
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --only=production && \
+    npm cache clean --force
+
+# Stage 2: Production
+FROM node:18-alpine
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S nodejs -u 1001
+WORKDIR /app
+COPY --from=build --chown=nodejs:nodejs /app/node_modules ./node_modules
+COPY --chown=nodejs:nodejs . .
+USER nodejs
+EXPOSE 3000
+HEALTHCHECK --interval=30s --timeout=3s \
+  CMD node -e "require('http').get('http://localhost:3000/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1))"
+CMD ["node", "app.js"]
+```
+
+**Resultado:** ~150MB (85% de reducción)
+
+### Análisis de Imágenes con dive (Opcional)
+
+```bash
+# Instalar dive
+brew install dive  # macOS
+# o
+wget https://github.com/wagoodman/dive/releases/download/v0.11.0/dive_0.11.0_linux_amd64.deb
+sudo apt install ./dive_0.11.0_linux_amd64.deb
+
+# Analizar imagen
+dive mi-app:latest
+
+# Navega con flechas, Tab cambia panel, Ctrl+C sale
+```
+
+### Verificar Usuario No-Root
+
+```bash
+# Ver usuario con el que corre el proceso
+docker exec <container-id> whoami
+
+# Ver UID/GID
+docker exec <container-id> id
+
+# Debe mostrar "nodejs" o usuario non-root, NO "root"
 ```
 
 ## Conceptos Clave

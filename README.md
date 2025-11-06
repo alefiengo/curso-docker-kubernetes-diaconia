@@ -68,11 +68,10 @@ Formar a los participantes en el uso de containers (contenedores) con Docker y s
   - Redes personalizadas y segmentación de servicios
   - Volúmenes para persistencia de datos
 
-- **[Clase 4: Microservicios, Seguridad y Puente a Kubernetes](bloque-docker/clase4-microservicios/)**
+- **[Clase 4: Microservicios y Seguridad](bloque-docker/clase4-microservicios/)**
   - Aplicación multi-contenedor con cache (Redis) y API Gateway
   - Escaneo de vulnerabilidades con Trivy y optimización de imágenes
   - Multi-stage builds, Alpine y usuarios non-root
-  - Introducción a Kubernetes: arquitectura, conceptos clave y comparación con Docker Compose
 
 ### Bloque 2: Kubernetes (Clases 5-7)
 
