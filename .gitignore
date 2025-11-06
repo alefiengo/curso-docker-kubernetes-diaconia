@@ -73,6 +73,7 @@ notas/
 personal/
 draft/
 borrador/
+.draft/
 
 # Temporary files
 *.tmp

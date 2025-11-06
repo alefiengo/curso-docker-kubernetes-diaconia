@@ -16,12 +16,12 @@ El proyecto se encuentra en un repositorio independiente para mantener el códig
 
 | Bloque | Tag | Stack | Qué incluye |
 |--------|-----|-------|-------------|
-| **Bloque Docker (Clases 2-5)** | `v1.0` | Compose stack: Spring Boot + PostgreSQL + Redis + Angular + Kong | API REST, persistencia, cache, gateway, optimización y prácticas de seguridad |
-| **Bloque Kubernetes (Clases 6-8)** | `v2.0` | Kubernetes stack completo | Deployments, Services, ConfigMaps, Secrets, StatefulSet, Ingress, HPA y observabilidad (Prometheus/Grafana) |
+| **Bloque Docker (Clases 1-4)** | `v1.0` | Compose stack: Spring Boot + PostgreSQL + Redis + Angular + Kong | API REST, persistencia, cache, gateway, optimización y prácticas de seguridad |
+| **Bloque Kubernetes (Clases 5-7)** | `v2.0` | Kubernetes stack completo | Deployments, Services, ConfigMaps, Secrets, StatefulSet, Ingress, HPA y observabilidad (Prometheus/Grafana) |
 
 **Notas:**
-- `v1.0` se etiqueta al finalizar el Bloque Docker (clase 5) e incorpora todos los avances del primer bloque.
-- `v2.0` se etiqueta al finalizar el Bloque Kubernetes (clase 8) e integra la migración completa a Kubernetes.
+- `v1.0` se etiqueta al finalizar el Bloque Docker (clase 4) e incorpora todos los avances del primer bloque.
+- `v2.0` se etiqueta al finalizar el Bloque Kubernetes (clase 7) e integra la migración completa a Kubernetes.
 
 ---
 
@@ -63,7 +63,7 @@ Los estudiantes pueden:
 
 ---
 
-## Stack Tecnológico Final (Clase 8)
+## Stack Tecnológico Final (Clase 7)
 
 ### Backend
 - **Spring Boot 3.5.6** (Java 17)
@@ -101,7 +101,7 @@ Los estudiantes pueden:
 
 ## Endpoints API
 
-### Clase 2 (Base)
+### Clase 1-2 (Base)
 - `GET /` → Bienvenida
 - `GET /api/greeting` → Saludo
 - `GET /api/info` → Info de la app
@@ -114,12 +114,13 @@ Los estudiantes pueden:
 - `PUT /api/users/{id}` → Actualizar usuario
 - `DELETE /api/users/{id}` → Eliminar usuario
 
-### Clase 4 (+ Redis + Angular)
+### Clase 4 (+ Redis + Angular + Seguridad)
 - Cache automático en endpoints GET
 - Frontend consume todos los endpoints
+- Imágenes optimizadas con Trivy
 
-### Clase 5-8
-- Mismo API, optimizado y desplegado en K8s
+### Clase 5-7 (Kubernetes)
+- Mismo API, desplegado y escalado en K8s
 
 ---
 

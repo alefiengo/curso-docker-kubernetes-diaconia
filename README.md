@@ -109,7 +109,7 @@ Formar a los participantes en el uso de containers (contenedores) con Docker y s
 **Bloque 2 (Kubernetes):**
 - **minikube** - Cluster local de Kubernetes
 - **kubectl** - CLI de Kubernetes
-- [Guía de instalación Kubernetes](INSTALL_KUBERNETES.md)
+- Instrucciones de instalación se proporcionarán al inicio de la Clase 5
 
 ### Instalaciones opcionales
 
@@ -160,14 +160,7 @@ Al finalizar el curso, los estudiantes desarrollarán un **proyecto final indivi
 
 **Objetivo:** Aprender el workflow profesional de versionamiento, publicación de imágenes en Docker Hub y gestión de rollouts en Kubernetes.
 
-**Entorno:** VirtualBox + Ubuntu 24.04 Desktop + microk8s + Docker
-
-**Entregables:**
-- Repositorio público en GitHub/GitLab
-- Imágenes públicas en Docker Hub
-- README con screenshots y documentación completa
-
-**[Ver instrucciones completas →](PROYECTO_FINAL.md)**
+Las instrucciones detalladas se proporcionarán al finalizar la Clase 7.
 
 ---
 
