@@ -1,0 +1,14 @@
+{
+  "name": "tasks-api",
+  "version": "1.0.0",
+  "description": "REST API de tareas con Node.js y MongoDB",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "alefiengo",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongodb": "^6.3.0"
+  }
+}

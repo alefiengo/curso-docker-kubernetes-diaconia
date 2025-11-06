@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frontend - API Gateway Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        .content {
+            padding: 30px;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            margin: 5px;
+            transition: transform 0.2s;
+        }
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        .response {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .architecture {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .architecture pre {
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            line-height: 1.5;
+        }
+        .info-box {
+            background: #e7f3ff;
+            border: 1px solid #b3d9ff;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .info-box ul {
+            margin-top: 10px;
+            padding-left: 25px;
+        }
+        .info-box li {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>API Gateway con Nginx</h1>
+            <p>Clase 4: Microservicios, Cache y API Gateway</p>
+        </div>
+
+        <div class="content">
+            <div class="section">
+                <h2>Arquitectura</h2>
+                <div class="architecture">
+                    <pre>Cliente → NGINX Gateway :8080
+    |
+    +-- /api/*  → Backend API :5000
+    |
+    +-- /*      → Frontend :80</pre>
+                </div>
+                <div class="info-box">
+                    <strong>Todas las requests pasan por Nginx</strong><br>
+                    Nginx actúa como punto de entrada único y distribuye el tráfico según la ruta.
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Probar Backend API (via Gateway)</h2>
+                <p>Todas las consultas pasan por el gateway en puerto 8080</p>
+                <button class="button" onclick="testBackend('/api/info')">GET /api/info</button>
+                <button class="button" onclick="testBackend('/api/users')">GET /api/users</button>
+                <button class="button" onclick="testBackend('/api/health')">GET /api/health</button>
+                <div id="backend-response" class="response" style="display:none"></div>
+            </div>
+
+            <div class="section">
+                <h2>Estado del Gateway</h2>
+                <button class="button" onclick="testGateway()">Health Check Gateway</button>
+                <div id="gateway-response" class="response" style="display:none"></div>
+            </div>
+
+            <div class="section">
+                <h2>Información</h2>
+                <div class="info-box">
+                    <p><strong>Puerto Gateway:</strong> 8080</p>
+                    <p><strong>Puerto Backend:</strong> 5000 (no accesible directamente desde fuera)</p>
+                    <p><strong>Puerto Frontend:</strong> 80 (no accesible directamente desde fuera)</p>
+                    <p><strong>Beneficios:</strong></p>
+                    <ul>
+                        <li>Punto de entrada único</li>
+                        <li>Servicios backend no expuestos directamente</li>
+                        <li>Fácil agregar autenticación, rate limiting, etc.</li>
+                        <li>Balanceo de carga entre múltiples instancias</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function testBackend(endpoint) {
+            const responseDiv = document.getElementById('backend-response');
+            responseDiv.style.display = 'block';
+            responseDiv.textContent = 'Cargando...';
+
+            try {
+                const response = await fetch(endpoint);
+                const data = await response.json();
+                responseDiv.textContent = `Status: ${response.status}\n\n${JSON.stringify(data, null, 2)}`;
+            } catch (error) {
+                responseDiv.textContent = `Error: ${error.message}`;
+            }
+        }
+
+        async function testGateway() {
+            const responseDiv = document.getElementById('gateway-response');
+            responseDiv.style.display = 'block';
+            responseDiv.textContent = 'Verificando gateway...';
+
+            try {
+                const response = await fetch('/gateway/health');
+                const text = await response.text();
+                responseDiv.textContent = `Status: ${response.status}\n\n${text}`;
+            } catch (error) {
+                responseDiv.textContent = `Error: ${error.message}`;
+            }
+        }
+    </script>
+</body>
+</html>
