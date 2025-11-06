@@ -51,7 +51,7 @@ Formar a los participantes en el uso de containers (contenedores) con Docker y s
 
 ## Clases (7 sesiones de 3 horas)
 
-### Bloque 1: Docker (Clases 1-5)
+### Bloque 1: Docker (Clases 1-4)
 
 - **[Clase 1: Introducción a Containers y Docker](bloque-docker/clase1-introduccion/)**
   - Instalación y configuración
@@ -68,27 +68,29 @@ Formar a los participantes en el uso de containers (contenedores) con Docker y s
   - Redes personalizadas y segmentación de servicios
   - Volúmenes para persistencia de datos
 
-- **[Clase 4: Microservicios y Seguridad Básica](bloque-docker/clase4-microservicios/)**
+- **[Clase 4: Microservicios, Seguridad y Puente a Kubernetes](bloque-docker/clase4-microservicios/)**
   - Aplicación multi-contenedor con cache (Redis) y API Gateway
-  - Comunicación entre servicios y frontend
-  - Introducción a scans con Trivy y hardening inicial
-
-- **[Clase 5: Seguridad Avanzada y Puente a Kubernetes](bloque-docker/clase5-seguridad/)**
   - Escaneo de vulnerabilidades con Trivy y optimización de imágenes
-  - Técnicas avanzadas (multi-stage builds, Alpine, non-root)
-  - Preview de Kubernetes: componentes y flujo declarativo
+  - Multi-stage builds, Alpine y usuarios non-root
+  - Introducción a Kubernetes: arquitectura, conceptos clave y comparación con Docker Compose
 
-### Bloque 2: Kubernetes (Clases 6-7)
+### Bloque 2: Kubernetes (Clases 5-7)
 
-- **[Clase 6: Fundamentos de Kubernetes](bloque-kubernetes/clase6-introduccion/)**
+- **[Clase 5: Fundamentos de Kubernetes](bloque-kubernetes/clase5-fundamentos/)**
   - Arquitectura de Kubernetes (Control Plane y Worker Nodes)
   - Pods, Deployments y Services (ClusterIP, NodePort, LoadBalancer con MetalLB)
-  - Herramientas clave: labels, selectors y namespaces
+  - Labels, selectors y namespaces básicos
 
-- **[Clase 7: Kubernetes Avanzado](bloque-kubernetes/clase7-configuracion-persistencia/)**
-  - Namespaces, ConfigMaps, Secrets, StatefulSets y PVC
-  - Ingress, health probes (liveness/readiness/startup) y HPA
-  - Observabilidad como bonus: guía Prometheus + Grafana
+- **[Clase 6: Configuración y Persistencia](bloque-kubernetes/clase6-configuracion-persistencia/)**
+  - Namespaces para organización de recursos
+  - ConfigMaps y Secrets para externalización de configuración
+  - StatefulSets y PersistentVolumeClaims para aplicaciones con estado
+
+- **[Clase 7: Ingress, Probes y Escalado](bloque-kubernetes/clase7-ingress-escalado/)**
+  - Ingress con NGINX para routing HTTP avanzado
+  - Health Probes (liveness, readiness, startup)
+  - HPA (Horizontal Pod Autoscaler) para escalado automático
+  - Observabilidad: Prometheus + Grafana + Loki
 
 **[Ver bloques completos →](bloque-docker/)**
 

@@ -45,21 +45,14 @@ Al finalizar este bloque, serás capaz de:
 
 **[Cheat Sheet - Clase 3](clase3-compose/cheatsheet.md)**
 
-### [Clase 4: Microservicios y Seguridad Básica](clase4-microservicios/)
+### [Clase 4: Microservicios, Seguridad y Puente a Kubernetes](clase4-microservicios/)
 
 - Aplicaciones multi-contenedor con cache (Redis) y API Gateway
-- Integración frontend/backend y comunicación entre servicios
-- Introducción a Trivy y prácticas de hardening inicial
+- Escaneo de vulnerabilidades con Trivy y optimización de imágenes
+- Multi-stage builds, Alpine y usuarios non-root
+- Introducción a Kubernetes: arquitectura, conceptos clave y comparación con Docker Compose
 
 **[Cheat Sheet - Clase 4](clase4-microservicios/cheatsheet.md)**
-
-### [Clase 5: Seguridad Avanzada y Puente a Kubernetes](clase5-seguridad/)
-
-- Escaneo continuo con Trivy y optimización avanzada de imágenes
-- Multi-stage builds, Alpine y usuarios non-root en profundidad
-- Preview de Kubernetes: conceptos base y transición al siguiente bloque
-
-**[Cheat Sheet - Clase 5](clase5-seguridad/cheatsheet.md)**
 
 
 ---
