@@ -382,7 +382,8 @@ En lugar de nginx, despliega tu propia aplicación:
 
 - [Lab 02 - Primer Pod](../labs/02-primer-pod/)
 - [Lab 03 - Deployments](../labs/03-deployments/)
-- [Lab 04 - Services](../labs/04-services/)
+- [Lab 04 - Service ClusterIP](../labs/04-clusterip/)
+- [Lab 05 - Service NodePort](../labs/05-nodeport/)
 - [Demo - FastAPI Products](../demos/fastapi-products-k8s/)
 - [Cheatsheet Clase 5](../cheatsheet.md)
 - [Kubernetes Docs - Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)

@@ -1,6 +1,6 @@
 # Demo: FastAPI Products API en Kubernetes
 
-Demo completa de despliegue de una aplicación FastAPI en Kubernetes, integrando todos los conceptos de la Clase 6.
+Demo completa de despliegue de una aplicación FastAPI en Kubernetes, integrando todos los conceptos de la Clase 5.
 
 ## Contenido
 
@@ -357,4 +357,4 @@ kubectl get pods --show-labels
 
 **Autor:** alefiengo
 **Curso:** Docker & Kubernetes - i-Quattro
-**Clase 6:** Introducción a Kubernetes
+**Clase 5:** Introducción a Kubernetes
