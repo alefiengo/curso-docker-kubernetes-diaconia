@@ -339,15 +339,15 @@ Esperar ~60 segundos (se actualiza automáticamente).
 
 ## Próxima Clase
 
-### Clase 7: Ingress, Health Probes, HPA y Observabilidad
+### Clase 7: Ingress, Health Probes y HPA (Clase Final)
 
 En la próxima clase veremos:
 
 - **Ingress**: Routing HTTP avanzado con NGINX Ingress Controller
 - **Health Probes**: Liveness, Readiness y Startup probes
 - **HPA**: Horizontal Pod Autoscaler (escalado automático basado en métricas)
-- **Observabilidad**: Prometheus, Grafana y Loki
-- **Demo Proyecto Integrador v2.0**: Stack completo desplegado en Kubernetes
+- **Proyecto Integrador v2.0**: Stack completo desplegado en Kubernetes
+- **Proyecto Final**: Instrucciones para trabajo individual post-curso
 
 **Preparación recomendada:**
 - Completar la tarea de esta clase

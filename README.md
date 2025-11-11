@@ -44,12 +44,12 @@ Formar a los participantes en el uso de containers (contenedores) con Docker y s
 6. Pods, Deployments y Services
 7. ConfigMaps, Secrets y Probes
 8. Escalado automático (HPA) e Ingress
-9. Observabilidad (logs, métricas, Prometheus/Grafana)
+9. Conceptos de observabilidad (kubectl top, metrics-server)
 10. Proyecto final integrador
 
 ---
 
-## Clases (7 sesiones de 3 horas)
+## Clases (6 sesiones de 3h + 1 sesión final de 2h)
 
 ### Bloque 1: Docker (Clases 1-4)
 

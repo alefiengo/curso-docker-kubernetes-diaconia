@@ -219,7 +219,7 @@ kubectl get ingress -n proyecto-integrador
 # - Verificar que los datos persisten (se guardan en PostgreSQL)
 ```
 
-**Resultado esperado:** Todo debe funcionar exactamente como se mostró en la Clase 8. Si hay errores, revisa logs con `kubectl logs <pod-name> -n proyecto-integrador`.
+**Resultado esperado:** Todo debe funcionar exactamente como se mostró en la Clase 7. Si hay errores, revisa logs con `kubectl logs <pod-name> -n proyecto-integrador`.
 
 **ACCIÓN REQUERIDA:** Una vez que todo funcione correctamente, captura los screenshots solicitados en los Entregables Parte 1. Estas capturas servirán como evidencia en tu documentación final.
 
