@@ -8,7 +8,7 @@ Repositorio oficial del curso de **i-Quattro** enfocado en el uso profesional de
 
 ## Información General
 
-**Duración:** 21 horas (7 sesiones de 3 horas)
+**Duración:** 20 horas (6 sesiones de 3 horas + 1 sesión final de 2 horas)
 **Modalidad:** 100% práctico con laboratorios en cada sesión
 
 ### Objetivos
@@ -85,11 +85,11 @@ Formar a los participantes en el uso de containers (contenedores) con Docker y s
   - ConfigMaps y Secrets para externalización de configuración
   - StatefulSets y PersistentVolumeClaims para aplicaciones con estado
 
-- **[Clase 7: Ingress, Probes y Escalado](bloque-kubernetes/clase7-ingress-escalado/)**
+- **[Clase 7: Ingress, Probes y Escalado](bloque-kubernetes/clase7-ingress-escalado/)** (Clase final - 2 horas)
   - Ingress con NGINX para routing HTTP avanzado
   - Health Probes (liveness, readiness, startup)
   - HPA (Horizontal Pod Autoscaler) para escalado automático
-  - Observabilidad: Prometheus + Grafana + Loki
+  - Proyecto Integrador v2.0 y Proyecto Final
 
 **[Ver bloques completos →](bloque-docker/)**
 
