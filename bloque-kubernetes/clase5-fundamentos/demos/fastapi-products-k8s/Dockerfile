@@ -1,38 +1,55 @@
 # Dockerfile Multi-stage para FastAPI
-# Optimizado para producción con imagen mínima
+# Optimizado para producción con imagen mínima y build reproducible (wheels)
 
-# Stage 1: Build
-FROM python:3.11-slim as builder
+############################
+# Stage 1: Builder
+############################
+FROM python:3.11-slim AS builder
+
+ENV PIP_NO_CACHE_DIR=1
 
 WORKDIR /build
 
-# Instalar dependencias de sistema necesarias para compilar
+# Dependencias mínimas para compilar wheels (añade más libs si tu proyecto las exige)
 RUN apt-get update && \
     apt-get install -y --no-install-recommends gcc && \
     rm -rf /var/lib/apt/lists/*
 
-# Copiar requirements y crear wheel packages
-COPY app/requirements.txt .
-RUN pip wheel --no-cache-dir --no-deps --wheel-dir /build/wheels -r requirements.txt
+# Asegurar pip reciente
+RUN python -m pip install --upgrade pip
 
+# Copiar requirements y construir wheels de requirements + dependencias
+COPY app/requirements.txt .
+# 👉 Importante: sin --no-deps, para que queden todas las dependencias en /build/wheels
+RUN pip wheel --no-cache-dir --wheel-dir /build/wheels -r requirements.txt
+
+
+############################
 # Stage 2: Runtime
-FROM python:3.11-slim
+############################
+FROM python:3.11-slim AS runtime
 
 LABEL maintainer="alefiengo"
 LABEL description="Products API - FastAPI Demo for Kubernetes"
 LABEL version="1.0.0"
 
-# Crear usuario no-root para seguridad
+# Ajustes de Python y pip para producción
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1
+
+# Usuario no-root
 RUN useradd -m -u 1000 appuser
 
 WORKDIR /app
 
-# Copiar wheels desde build stage
+# Copiar wheels y requirements desde el builder
 COPY --from=builder /build/wheels /wheels
 COPY --from=builder /build/requirements.txt .
 
-# Instalar dependencias desde wheels
-RUN pip install --no-cache-dir --no-index --find-links=/wheels -r requirements.txt && \
+# Instalar dependencias desde wheels (offline/reproducible) y limpiar
+RUN python -m pip install --upgrade pip && \
+    pip install --no-index --find-links=/wheels -r requirements.txt && \
     rm -rf /wheels
 
 # Copiar código de la aplicación
@@ -44,9 +61,9 @@ USER appuser
 # Exponer puerto
 EXPOSE 8000
 
-# Health check
+# Health check (ajusta la ruta si tu app usa otra)
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
     CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')" || exit 1
 
-# Comando para ejecutar la aplicación
+# Comando por defecto de arranque
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
