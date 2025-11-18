@@ -6,6 +6,61 @@
 
 ---
 
+## Índice Rápido
+
+1. [Criterios de Evaluación](#criterios-de-evaluación)
+2. [Objetivo](#objetivo)
+3. [Prerequisitos](#prerequisitos)
+4. [Parte 1: Setup del Ambiente (15%)](#parte-1-setup-del-ambiente-15)
+5. [Parte 2: Backend v2.1 (20%)](#parte-2-iteración-v21---modificar-backend-20)
+6. [Parte 3: Frontend v2.2 (20%)](#parte-3-iteración-v22---modificar-frontend-20)
+7. [Parte 4: Gestión de Versiones (15%)](#parte-4-gestión-de-versiones-con-rollout-15)
+8. [Parte 5: Ingress + MetalLB (10%)](#parte-5-acceso-externo-via-ingress--metallb-10)
+9. [Formato de Entrega](#formato-de-entrega)
+10. [Recursos y FAQ](#recursos-de-apoyo)
+
+## TL;DR - Flujo del Proyecto
+
+- Preparar ambiente con microk8s, Docker y MetalLB, desplegar v2.0 base y documentar evidencias.
+- Iterar backend (v2.1) y frontend (v2.2) con nuevos endpoints/interfaces, versionar imágenes y actualizar deployments.
+- Practicar `kubectl rollout` para historial, rollback y rollforward.
+- Validar Ingress + MetalLB accediendo a todos los endpoints vía IP externa.
+- Documentar absolutamente todo en Markdown dentro del repo público y subir imágenes a Docker Hub público.
+
+## Criterios de Evaluación
+
+| Criterio | Peso | Aspectos Evaluados |
+|----------|------|-------------------|
+| **Setup Ambiente** | 15% | - Instalación correcta de microk8s<br/>- Addons habilitados<br/>- v2.0 funcional<br/>- MetalLB configurado |
+| **Backend v2.1** | 20% | - Endpoint correcto y funcional<br/>- Imagen en Docker Hub<br/>- Deployment actualizado correctamente<br/>- Rolling update evidenciado |
+| **Frontend v2.2** | 20% | - UI funcional y bien integrada<br/>- Imagen en Docker Hub<br/>- Rolling update del frontend<br/>- Integración con /api/info correcta |
+| **Gestión Versiones** | 15% | - Rollback ejecutado correctamente<br/>- Rollforward funcional<br/>- Comprensión de comandos rollout<br/>- Explicación clara del proceso |
+| **Ingress + MetalLB** | 10% | - Acceso externo funcional<br/>- Configuración correcta de MetalLB<br/>- Todos los endpoints accesibles via IP<br/>- Documentación de configuración de red |
+| **Documentación Markdown (GitHub/GitLab)** | 20% | - README y guías en Markdown<br/>- Repositorio público<br/>- Evidencias claras en texto e imágenes<br/>- Nada de PDFs/formatos cerrados |
+
+> La documentación en Markdown equivale al 20% de la nota. Si falta o está incompleta, no se aprueba el proyecto.
+
+### Puntos Extra (Opcional, hasta +10%)
+
+- **Validar HPA (Horizontal Pod Autoscaler)** (+5%)
+  - Generar carga desde un pod busybox: `kubectl run -i --tty load-generator --rm --image=busybox --restart=Never -n proyecto-integrador -- /bin/sh -c "while true; do wget -q -O- http://api-service:8080/api/users; done"`
+  - En otra terminal, observar: `kubectl get hpa -n proyecto-integrador -w`
+  - Screenshot de HPA mostrando el incremento de CPU y replicas
+  - Screenshot de `kubectl get pods -n proyecto-integrador` mostrando los pods adicionales creados
+  - Documentar el proceso: estado inicial → generar carga → observar escalado → detener carga (Ctrl+C) → observar scale down
+
+- **Validar Health Probes** (+3%)
+  - Forzar fallo del backend (kill process dentro del pod)
+  - Screenshot de Kubernetes reiniciando el pod automáticamente
+  - Explicar cómo liveness probe detectó el fallo
+
+- **Persistencia de Datos** (+2%)
+  - Eliminar el pod de PostgreSQL
+  - Verificar que los datos persisten cuando se recrea
+  - Screenshot del proceso
+
+---
+
 ## Objetivo
 
 Aprender el workflow profesional de actualización y gestión de versiones de aplicaciones en Kubernetes, utilizando microk8s como entorno de desarrollo local que simula un cluster cloud.
@@ -224,14 +279,25 @@ kubectl get ingress -n proyecto-integrador
 **ACCIÓN REQUERIDA:** Una vez que todo funcione correctamente, captura los screenshots solicitados en los Entregables Parte 1. Estas capturas servirán como evidencia en tu documentación final.
 
 ### Entregables Parte 1
+
+> Nota: Cada vez que se mencione "screenshot" se refiere a una captura de pantalla clara donde se vea la evidencia solicitada.
 - Screenshot de `microk8s status` mostrando todos los addons habilitados (debe verse el hostname con tu nombre)
 - Screenshot de `kubectl get all -n proyecto-integrador` mostrando todos los pods Running (terminal con hostname visible)
 - Screenshot del navegador accediendo al frontend via IP de MetalLB
 - Screenshot de la configuración de la VM (VirtualBox/VMware) o instancia (Cloud) mostrando el nombre con tu nombre completo
 
+#### Checklist rápida Parte 1
+
+| Acción clave | Evidencia |
+|--------------|-----------|
+| microk8s instalado con addons habilitados | Captura `microk8s status` |
+| Proyecto v2.0 funcionando en el cluster | Captura `kubectl get all -n proyecto-integrador` |
+| Ingress resolviendo el frontend | Captura del navegador usando la IP de MetalLB |
+| Identidad del ambiente validada | Captura de configuración de VM/instancia con tu nombre |
+
 ---
 
-## Parte 2: Iteración v2.1 - Modificar Backend (25%)
+## Parte 2: Iteración v2.1 - Modificar Backend (20%)
 
 ### Objetivo
 Agregar un nuevo endpoint en el backend, versionar la imagen como v2.1, publicarla en tu Docker Hub y actualizar el deployment.
@@ -354,9 +420,18 @@ git tag -a v2.1 -m "Backend v2.1 con endpoint /api/info"
 - Screenshot de `kubectl get pods` mostrando los pods con la nueva versión
 - Screenshot o output de `curl http://<IP-METALLB>/api/info` mostrando la respuesta JSON
 
+#### Checklist rápida Parte 2
+
+| Acción clave | Evidencia |
+|--------------|-----------|
+| Endpoint `/api/info` implementado con tu nombre | Captura del archivo `GreetingController.java` |
+| Imagen backend v2.1 construida y publicada | `docker images` + enlace a Docker Hub |
+| Rolling update aplicado sin errores | Capturas de `kubectl rollout status` y `kubectl get pods` |
+| Endpoint accesible vía Ingress o port-forward | Output de `curl http://<IP>/api/info` |
+
 ---
 
-## Parte 3: Iteración v2.2 - Modificar Frontend (25%)
+## Parte 3: Iteración v2.2 - Modificar Frontend (20%)
 
 ### Objetivo
 Agregar funcionalidad en el frontend para consumir el nuevo endpoint `/api/info`, versionar como v2.2 y desplegar.
@@ -470,9 +545,18 @@ Acceder desde el navegador a: `http://<IP-METALLB>/`
 - Screenshot del navegador mostrando el botón "Ver Info del Sistema"
 - Screenshot del navegador mostrando la información del sistema cargada
 
+#### Checklist rápida Parte 3
+
+| Acción clave | Evidencia |
+|--------------|-----------|
+| Botón y sección de info implementados en Angular | Capturas de `app.component.html` y `.ts` |
+| Imagen frontend v2.2 creada y publicada | Enlace y captura de Docker Hub / build |
+| Rolling update del frontend observado | Captura de `kubectl get pods -w` |
+| UI sirviendo la información del sistema | Capturas del navegador (botón e info cargada) |
+
 ---
 
-## Parte 4: Gestión de Versiones con Rollout (20%)
+## Parte 4: Gestión de Versiones con Rollout (15%)
 
 ### Objetivo
 Aprender a gestionar versiones de deployments usando comandos de rollout (rollback, rollforward, historial).
@@ -545,9 +629,18 @@ kubectl get pods -n proyecto-integrador -w
 - Screenshot verificando que `/api/info` volvió a funcionar
 - Explicación en tus propias palabras: ¿Qué hace `kubectl rollout undo`?
 
+#### Checklist rápida Parte 4
+
+| Acción clave | Evidencia |
+|--------------|-----------|
+| Historial de rollouts consultado para backend y frontend | Capturas de `kubectl rollout history` |
+| Rollback ejecutado y endpoint caído | Captura de `kubectl rollout undo` + `curl /api/info` con error |
+| Rollforward aplicado y endpoint restablecido | Captura del undo `--to-revision` + `curl /api/info` funcionando |
+| Comprensión documentada de `kubectl rollout undo` | Explicación escrita en README o sección de conclusiones |
+
 ---
 
-## Parte 5: Acceso Externo via Ingress + MetalLB (15%)
+## Parte 5: Acceso Externo via Ingress + MetalLB (10%)
 
 ### Objetivo
 Verificar que el acceso externo funciona correctamente sin necesidad de port-forward, simulando un entorno cloud real.
@@ -611,9 +704,21 @@ Si tienes otra computadora en la misma red, intenta acceder a `http://<IP-METALL
 - Screenshot de `kubectl get ingress` mostrando la IP asignada
 - Screenshot de `kubectl describe ingress` mostrando las rutas configuradas
 - Screenshot del navegador accediendo a `http://<IP-METALLB>/` (frontend)
+- Screenshot de curl a `/api/users` desde la IP de MetalLB (usa también `/api/greeting` si deseas mostrar ambos)
 - Screenshot de curl a `/api/info` desde la IP de MetalLB
 - Screenshot de curl a `/actuator/health` mostrando status UP
 - IP del Ingress (anotar)
+
+#### Checklist rápida Parte 5
+
+| Acción clave | Evidencia |
+|--------------|-----------|
+| Ingress creado y con IP externa asignada | Captura de `kubectl get ingress` |
+| Reglas de enrutamiento verificadas | Captura de `kubectl describe ingress` |
+| Frontend accesible vía IP externa | Captura del navegador |
+| Endpoints `/api/users` (y `/api/greeting`) responden vía IP externa | Capturas de comandos `curl` |
+| Endpoints `/api/info` y `/actuator/health` responden vía IP externa | Capturas de comandos `curl` |
+| IP final documentada | Registro en README/Entregables |
 
 ---
 
@@ -621,7 +726,7 @@ Si tienes otra computadora en la misma red, intenta acceder a `http://<IP-METALL
 
 ### Repositorio Público en GitHub o GitLab
 
-**IMPORTANTE:** Todo el proyecto debe ser público (repositorio y Docker Hub). No se aceptan PDFs.
+**IMPORTANTE:** Todo el proyecto debe ser público (repositorio y Docker Hub). No se aceptan PDFs. La documentación en Markdown (README, guías, evidencia descrita) representa el 20% de la nota, así que tu repositorio debe contar la historia completa del despliegue.
 
 #### Estructura del Repositorio
 
@@ -644,6 +749,8 @@ Si tienes otra computadora en la misma red, intenta acceder a `http://<IP-METALL
    **Alumno:** [Tu Nombre Completo]
    **Fecha:** [Fecha de Entrega]
    **Curso:** Docker & Kubernetes - i-Quattro
+
+   > **Nota:** Este README debe describir cada parte con evidencias y comentarios en Markdown; recuerda que la documentación representa el 20% de la nota final.
 
    ## Links de Docker Hub
    - Backend v2.1: https://hub.docker.com/r/tu-usuario/springboot-api/tags
@@ -742,37 +849,6 @@ Si tienes otra computadora en la misma red, intenta acceder a `http://<IP-METALL
 
 ---
 
-## Criterios de Evaluación
-
-| Criterio | Peso | Aspectos Evaluados |
-|----------|------|-------------------|
-| **Setup Ambiente** | 15% | - Instalación correcta de microk8s<br/>- Addons habilitados<br/>- v2.0 funcional<br/>- MetalLB configurado |
-| **Backend v2.1** | 25% | - Endpoint correcto y funcional<br/>- Imagen en Docker Hub<br/>- Deployment actualizado correctamente<br/>- Rolling update evidenciado |
-| **Frontend v2.2** | 25% | - UI funcional y bien integrada<br/>- Imagen en Docker Hub<br/>- Rolling update del frontend<br/>- Integración con /api/info correcta |
-| **Gestión Versiones** | 20% | - Rollback ejecutado correctamente<br/>- Rollforward funcional<br/>- Comprensión de comandos rollout<br/>- Explicación clara del proceso |
-| **Ingress + MetalLB** | 15% | - Acceso externo funcional<br/>- Configuración correcta de MetalLB<br/>- Todos los endpoints accesibles via IP<br/>- Documentación de configuración de red |
-
-### Puntos Extra (Opcional, hasta +10%)
-
-- **Validar HPA (Horizontal Pod Autoscaler)** (+5%)
-  - Generar carga desde un pod busybox: `kubectl run -i --tty load-generator --rm --image=busybox --restart=Never -n proyecto-integrador -- /bin/sh -c "while true; do wget -q -O- http://api-service:8080/api/users; done"`
-  - En otra terminal, observar: `kubectl get hpa -n proyecto-integrador -w`
-  - Screenshot de HPA mostrando el incremento de CPU y replicas
-  - Screenshot de `kubectl get pods -n proyecto-integrador` mostrando los pods adicionales creados
-  - Documentar el proceso: estado inicial → generar carga → observar escalado → detener carga (Ctrl+C) → observar scale down
-
-- **Validar Health Probes** (+3%)
-  - Forzar fallo del backend (kill process dentro del pod)
-  - Screenshot de Kubernetes reiniciando el pod automáticamente
-  - Explicar cómo liveness probe detectó el fallo
-
-- **Persistencia de Datos** (+2%)
-  - Eliminar el pod de PostgreSQL
-  - Verificar que los datos persisten cuando se recrea
-  - Screenshot del proceso
-
----
-
 ## Recursos de Apoyo
 
 ### Documentación Oficial
@@ -835,25 +911,7 @@ kubectl delete namespace proyecto-integrador
 
 ### ¿Qué rango de IPs uso para MetalLB?
 
-Depende de tu red local. Ejecuta:
-```bash
-ip a show eth0
-# o para ver todas las interfaces:
-ip a show
-```
-
-Busca la línea con `inet` en tu interfaz de red principal (eth0, enp0s3, etc.):
-```
-inet 192.168.1.50/24 brd 192.168.1.255 scope global eth0
-```
-
-De este ejemplo:
-- Tu IP es: `192.168.1.50`
-- La máscara `/24` indica red clase C
-- Tu red es: `192.168.1.0/24`
-- Usa un rango alto (fuera del DHCP): `192.168.1.200-192.168.1.210`
-
-**Importante:** El rango debe estar en la misma red pero NO en uso por DHCP del router.
+Consulta los pasos detallados en la sección [1.3 Habilitar Addons](#13-habilitar-addons). En resumen, identifica tu red con `ip a show`, calcula el rango disponible (ej. `192.168.1.200-192.168.1.210`) y asegúrate de que no lo entregue tu DHCP. Usa siempre un bloque dentro de tu red local.
 
 ### ¿Puedo usar otro editor en lugar de vi/nano?
 
@@ -928,7 +986,7 @@ kubectl describe pod -l app=api -n proyecto-integrador | grep Image:
 
 ## Fecha de Entrega
 
-**Fecha límite:** A definir por el instructor
+**Fecha límite:** Se publicará en Moodle con al menos 7 días de anticipación. Considera la última semana del curso como referencia y planifica terminar 48 horas antes para revisar evidencias.
 
 **Formato:** Link al repositorio público de GitHub o GitLab
 
